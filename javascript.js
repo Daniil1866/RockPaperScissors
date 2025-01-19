@@ -28,6 +28,7 @@ function getHumanChoice() {
 // function designed to play a single round
 
 function playRound(humanChoice, computerChoice) {
+  // handle null input
   // handle invalid input
   if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
     console.log("You chose an unexisting object, game over!");
@@ -75,4 +76,13 @@ function playRound(humanChoice, computerChoice) {
   }
 }
 
-playRound(getHumanChoice(), getComputerChoice());
+// function to play a 5 round game
+function playGame() {
+  for (let i = 0; i < 5; i++) {
+    playRound(getHumanChoice(), getComputerChoice());
+  }
+  // display the final score, and the winner
+  console.log("Final score: " + humanScore + computerScore);
+  console.log((humanScore > computerScore) ? "Player wins!" : "Computer wins!");
+}
+
