@@ -29,6 +29,10 @@ function getHumanChoice() {
 
 function playRound(humanChoice, computerChoice) {
   // handle null input
+  if (humanChoice == null){
+    console.log("You canceled the game");
+    return;
+  }
   // handle invalid input
   if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
     console.log("You chose an unexisting object, game over!");
