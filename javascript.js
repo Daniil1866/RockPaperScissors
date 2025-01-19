@@ -30,10 +30,14 @@ function getHumanChoice() {
 function playRound(humanChoice, computerChoice) {
   // handle invalid input
   if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
-    console.log("You chose an unexisting object, game over!")
+    console.log("You chose an unexisting object, game over!");
     return;
   }
 
+  console.log("Computer's turn: " + computerChoice);
+  console.log("Your turn: " + humanChoice);
+
+  // handle all rock cases
   if (humanChoice === "rock") {
     if (computerChoice === "paper") {
       computerScore++;
@@ -41,12 +45,33 @@ function playRound(humanChoice, computerChoice) {
     }
     else if (computerChoice === "scissors") {
       humanScore++;
-      console.log("You win! rock beats scissors")
+      console.log("You win! rock beats scissors");
     }
     else console.log("It's a tie!");
   }
+  // handle all paper cases
   else if (humanChoice === "paper") {
-
+    if (computerChoice === "scissors") {
+      computerScore++;
+      console.log("You lose! scissors beats paper");
+    }
+    else if (computerChoice === "rock") {
+      humanScore++;
+      console.log("You win! paper beats rock");
+    }
+    else console.log("It's a tie!");
+  }
+  // handle all scissors cases
+  else if (humanChoice === "scissors") {
+    if (computerChoice === "rock") {
+      computerScore++;
+      console.log("You lose! rock beats scissors");
+    }
+    else if (computerChoice === "paper") {
+      humanScore++;
+      console.log("You win! scissors beats paper");
+    }
+    else console.log("It's a tie!");
   }
 }
 
