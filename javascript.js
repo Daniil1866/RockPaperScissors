@@ -18,10 +18,11 @@ function getComputerChoice() {
   else return "scissors";
 }
 
-// function to prompt user's choice, (if he chose an unexisting option, automatically end the game)
+// function to prompt user's choice, (if he chose an unexisting option, or is cancelling the choice automatically end the game)
 
 function getHumanChoice() {
   let choice = prompt("Make your turn");
+  if (choice == null) return "";
   return choice.toLocaleLowerCase();
 }
 
@@ -29,14 +30,14 @@ function getHumanChoice() {
 
 function playRound(humanChoice, computerChoice) {
   // handle null input
-  if (humanChoice == null){
+  if (humanChoice == null) {
     console.log("You canceled the game");
-    return;
+    return false;
   }
   // handle invalid input
   if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
     console.log("You chose an unexisting object, game over!");
-    return;
+    return false;
   }
 
   console.log("Computer's turn: " + computerChoice);
@@ -83,10 +84,13 @@ function playRound(humanChoice, computerChoice) {
 // function to play a 5 round game
 function playGame() {
   for (let i = 0; i < 5; i++) {
-    playRound(getHumanChoice(), getComputerChoice());
+    if (!playRound(getHumanChoice(), getComputerChoice())) break;
   }
   // display the final score, and the winner
-  console.log("Final score: " + humanScore + computerScore);
+  console.log("Final score: ");
+  console.log("Player score: " + humanScore);
+  console.log("Computer score: " + computerScore);
   console.log((humanScore > computerScore) ? "Player wins!" : "Computer wins!");
 }
 
+playGame();
