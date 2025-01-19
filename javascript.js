@@ -25,3 +25,29 @@ function getHumanChoice() {
   return choice.toLocaleLowerCase();
 }
 
+// function designed to play a single round
+
+function playRound(humanChoice, computerChoice) {
+  // handle invalid input
+  if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
+    console.log("You chose an unexisting object, game over!")
+    return;
+  }
+
+  if (humanChoice === "rock") {
+    if (computerChoice === "paper") {
+      computerScore++;
+      console.log("You lose! paper beats rock");
+    }
+    else if (computerChoice === "scissors") {
+      humanScore++;
+      console.log("You win! rock beats scissors")
+    }
+    else console.log("It's a tie!");
+  }
+  else if (humanChoice === "paper") {
+
+  }
+}
+
+playRound(getHumanChoice(), getComputerChoice());
