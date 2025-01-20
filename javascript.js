@@ -2,6 +2,10 @@
 
 let humanScore = 0, computerScore = 0;
 
+// paragraph where the game text will be displayed
+
+let logOutput;
+
 // function which randomly returns rock, paper, or scissors
 
 function getComputerChoice() {
@@ -31,66 +35,81 @@ function getHumanChoice() {
 function playRound(humanChoice, computerChoice) {
   // handle null input
   if (humanChoice == null) {
-    console.log("You canceled the game");
-    return false;
+    logOutput.innerHTML += "You canceled the game" + '<br>';
+    return false; // return false to stop the execution
   }
   // handle invalid input
   if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
-    console.log("You chose an unexisting object, game over!");
-    return false;
+    logOutput.innerHTML += "You chose an unexisting object, game over!" + '<br>';
+    return false; // return false to stop the execution
   }
 
-  console.log("Computer's turn: " + computerChoice);
-  console.log("Your turn: " + humanChoice);
+  logOutput.innerHTML += '<br>' + "Computer's turn: " + computerChoice + '<br>';
+  logOutput.innerHTML += "Your turn: " + humanChoice + '<br>';
 
   // handle all rock cases
   if (humanChoice === "rock") {
     if (computerChoice === "paper") {
       computerScore++;
-      console.log("You lose! paper beats rock");
+      logOutput.innerHTML += "You lose! paper beats rock" + '<br>';
     }
     else if (computerChoice === "scissors") {
       humanScore++;
-      console.log("You win! rock beats scissors");
+      logOutput.innerHTML += "You win! rock beats scissors" + '<br>';
     }
-    else console.log("It's a tie!");
+    else
+      logOutput.innerHTML += "It's a tie!" + '<br>';
   }
   // handle all paper cases
   else if (humanChoice === "paper") {
     if (computerChoice === "scissors") {
       computerScore++;
-      console.log("You lose! scissors beats paper");
+      logOutput.innerHTML += "You lose! scissors beats paper" + '<br>';
     }
     else if (computerChoice === "rock") {
       humanScore++;
-      console.log("You win! paper beats rock");
+      logOutput.innerHTML += "You win! paper beats rock" + '<br>';
     }
-    else console.log("It's a tie!");
+    else
+      logOutput.innerHTML += "It's a tie!" + '<br>';
   }
   // handle all scissors cases
   else if (humanChoice === "scissors") {
     if (computerChoice === "rock") {
       computerScore++;
-      console.log("You lose! rock beats scissors");
+      logOutput.innerHTML += "You lose! rock beats scissors" + '<br>';
     }
     else if (computerChoice === "paper") {
       humanScore++;
-      console.log("You win! scissors beats paper");
+      logOutput.innerHTML += "You win! scissors beats paper" + '<br>';
     }
-    else console.log("It's a tie!");
+    else
+      logOutput.innerHTML += "It's a tie!" + '<br>';
   }
+  return true; // in case if everything goes fine, just return true
 }
 
 // function to play a 5 round game
 function playGame() {
+  logOutput.innerHTML = "";
+  humanScore = computerScore = 0;
   for (let i = 0; i < 5; i++) {
     if (!playRound(getHumanChoice(), getComputerChoice())) break;
   }
   // display the final score, and the winner
-  console.log("Final score: ");
-  console.log("Player score: " + humanScore);
-  console.log("Computer score: " + computerScore);
-  console.log((humanScore > computerScore) ? "Player wins!" : "Computer wins!");
+  logOutput.innerHTML += '<br>' + "Final score: " + '<br>';
+  logOutput.innerHTML += "Player: " + humanScore + '<br>';
+  logOutput.innerHTML += "Computer: " + computerScore + '<br>';
+  logOutput.innerHTML += (humanScore > computerScore) ? "Player wins!" : "Computer wins!"
 }
 
-playGame();
+// HTML tags are located inside the DOM tree, so an event listener is required to be sure that they are available for further work
+document.addEventListener('DOMContentLoaded', () => {
+  // Add a button for starting the game
+  const button = document.querySelector('button');
+  button.addEventListener('click', playGame);
+
+  // Add a paragraph where the game text appears
+  logOutput = document.getElementById('output'); // Select the paragraph
+  logOutput.innerHTML = "Welcome to the Rock Paper Scissors game!" + '<br>' + '<br>';
+});
