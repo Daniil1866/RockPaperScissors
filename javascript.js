@@ -1,7 +1,10 @@
+let humanScore = 0, computerScore = 0;
 const startButton = document.querySelector('#start-button');
 startButton.addEventListener('click', playGame);
 
-let logOutput; // paragraph where the game text will be displayed
+const buttonContainer = document.querySelector("#button-container");
+
+let logOutput;
 logOutput = document.getElementById('output');
 logOutput.innerHTML = "Welcome to the Rock Paper Scissors game!" + '<br>' + '<br>';
 
@@ -13,17 +16,6 @@ function getComputerChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-  // handle null input
-  if (humanChoice == null) {
-    logOutput.innerHTML += "You canceled the game" + '<br>';
-    return false; // return false to stop the execution
-  }
-  // handle invalid input
-  if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
-    logOutput.innerHTML += "You chose an unexisting object, game over!" + '<br>';
-    return false; // return false to stop the execution
-  }
-
   logOutput.innerHTML += '<br>' + "Computer's turn: " + computerChoice + '<br>';
   logOutput.innerHTML += "Your turn: " + humanChoice + '<br>';
 
@@ -66,37 +58,35 @@ function playRound(humanChoice, computerChoice) {
     else
       logOutput.innerHTML += "It's a tie!" + '<br>';
   }
-  return true; // in case if everything goes fine, just return true
+  if (humanScore >= 5 || computerScore >= 5) {
+    startButton.classList.remove("disabled");
+    buttonContainer.classList.add("disabled");
+    displayFinalScore(humanScore, computerScore);
+  }
 }
 
 function playGame() {
-  let humanScore = 0, computerScore = 0;
+  humanScore = computerScore = 0;
   logOutput.innerHTML = "";
 
-  const buttonContainer = document.querySelector("#button-container");
   startButton.classList.add("disabled");
   buttonContainer.classList.remove("disabled");
   buttonContainer.addEventListener('click', (e) => {
     switch (e.target.id) {
       case "rock-button":
-        console.log("rock");
+        logOutput.innerHTML = "";
+        playRound("rock", getComputerChoice());
         break;
       case "paper-button":
-        console.log("paper");
+        logOutput.innerHTML = "";
+        playRound("paper", getComputerChoice());
         break;
       case "scissors-button":
-        console.log("scissors");
+        logOutput.innerHTML = "";
+        playRound("scissors", getComputerChoice());
         break;
     }
   });
-
-
-
-  // while (humanScore <= 5 || computerScore <= 5) {
-  //   if (!playRound(getHumanChoice(), getComputerChoice())) break;
-  //   buttonContainer.forEach(button =>button.classList.remove("disabled"));
-  //   displayFinalScore(humanScore, computerScore);
-  // }
 }
 
 function displayFinalScore(humanScore, computerScore) {
