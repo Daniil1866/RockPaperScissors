@@ -1,13 +1,7 @@
-// variables that will store the players score
-
-let humanScore = 0, computerScore = 0;
-
-// paragraph where the game text will be displayed
-
-let logOutput;
+let humanScore = 0, computerScore = 0; // variables that will store the players score
+let logOutput; // paragraph where the game text will be displayed
 
 // function which randomly returns rock, paper, or scissors
-
 function getComputerChoice() {
   // generate a random number from 1 to 10
   let choice = Math.floor(Math.random() * 10) + 1;
@@ -23,7 +17,6 @@ function getComputerChoice() {
 }
 
 // function to prompt user's choice, (if he chose an unexisting option, or is cancelling the choice automatically end the game)
-
 function getHumanChoice() {
   let choice = prompt("Make your turn");
   if (choice == null) return "";
@@ -89,27 +82,31 @@ function playRound(humanChoice, computerChoice) {
   return true; // in case if everything goes fine, just return true
 }
 
-// function to play a 5 round game
+
 function playGame() {
+  document.querySelector("#start-button").classList.add("disabled");
+  document.querySelector('#rock-button').classList.remove("disabled");
+  document.querySelector('#paper-button').classList.remove("disabled");
+  document.querySelector('#scissors-button').classList.remove("disabled");
+
   logOutput.innerHTML = "";
   humanScore = computerScore = 0;
-  for (let i = 0; i < 5; i++) {
-    if (!playRound(getHumanChoice(), getComputerChoice())) break;
-  }
+
   // display the final score, and the winner
-  logOutput.innerHTML += '<br>' + "Final score: " + '<br>';
+  logOutput.innerHTML += '<br>' + "Final results: " + '<br>';
   logOutput.innerHTML += "Player: " + humanScore + '<br>';
   logOutput.innerHTML += "Computer: " + computerScore + '<br>';
-  logOutput.innerHTML += (humanScore > computerScore) ? "Player wins!" : "Computer wins!"
+  logOutput.innerHTML += (humanScore === computerScore) ? "Nobody won" : (humanScore > computerScore) ? "Player wins!" : "Computer wins!"
+
+  // while (humanScore <= 5 || computerScore <= 5) {
+  //   if (!playRound(getHumanChoice(), getComputerChoice())) break;
+  // }
 }
 
-// HTML tags are located inside the DOM tree, so an event listener is required to be sure that they are available for further work
-document.addEventListener('DOMContentLoaded', () => {
-  // Add a button for starting the game
-  const button = document.querySelector('button');
-  button.addEventListener('click', playGame);
+// Add a button for starting the game
+const button = document.querySelector('#start-button');
+button.addEventListener('click', playGame);
 
-  // Add a paragraph where the game text appears
-  logOutput = document.getElementById('output'); // Select the paragraph
-  logOutput.innerHTML = "Welcome to the Rock Paper Scissors game!" + '<br>' + '<br>';
-});
+// Add a paragraph where the game text appears
+logOutput = document.getElementById('output'); // Select the paragraph
+logOutput.innerHTML = "Welcome to the Rock Paper Scissors game!" + '<br>' + '<br>';
