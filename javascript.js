@@ -3,6 +3,22 @@ const startButton = document.querySelector('#start-button');
 startButton.addEventListener('click', playGame);
 
 const buttonContainer = document.querySelector("#button-container");
+buttonContainer.addEventListener('click', (e) => {
+  switch (e.target.id) {
+    case "rock-button":
+      logOutput.innerHTML = "";
+      playRound("rock", getComputerChoice());
+      break;
+    case "paper-button":
+      logOutput.innerHTML = "";
+      playRound("paper", getComputerChoice());
+      break;
+    case "scissors-button":
+      logOutput.innerHTML = "";
+      playRound("scissors", getComputerChoice());
+      break;
+  }
+});
 
 let logOutput;
 logOutput = document.getElementById('output');
@@ -66,27 +82,12 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function playGame() {
-  humanScore = computerScore = 0;
+  humanScore = 0;
+  computerScore = 0;
   logOutput.innerHTML = "";
 
   startButton.classList.add("disabled");
   buttonContainer.classList.remove("disabled");
-  buttonContainer.addEventListener('click', (e) => {
-    switch (e.target.id) {
-      case "rock-button":
-        logOutput.innerHTML = "";
-        playRound("rock", getComputerChoice());
-        break;
-      case "paper-button":
-        logOutput.innerHTML = "";
-        playRound("paper", getComputerChoice());
-        break;
-      case "scissors-button":
-        logOutput.innerHTML = "";
-        playRound("scissors", getComputerChoice());
-        break;
-    }
-  });
 }
 
 function displayFinalScore(humanScore, computerScore) {
